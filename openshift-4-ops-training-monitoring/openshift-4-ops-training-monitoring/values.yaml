@@ -1,0 +1,123 @@
+
+
+grafana:
+  rbac:
+    create: true
+    pspEnabled: false
+  ingress: 
+    annotations: 
+      kubernetes.io/ingress.class: nginx-public
+      kubernetes.io/tls-acme: "true"
+    enabled: true
+    hosts: 
+      - "grafana-openshift-4-ops-training-monitoring.k8s.puzzle.ch"
+    tls:
+      - secretName: grafana-openshift-4-ops-training-monitoring
+        hosts:
+         - grafana-openshift-4-ops-training-monitoring.k8s.puzzle.ch
+  persistence: 
+    enabled: false
+    size: "1Gi"
+  datasources: 
+    datasources.yaml:
+      apiVersion: 1
+      datasources:
+      - name: Prometheus
+        type: prometheus
+        url: http://rel1-prometheus-server
+        access: proxy
+        isDefault: true
+  sidecar:
+    dashboards:
+      enabled: true
+      labelValue: dashboard
+prometheus-blackbox-exporter:
+  pspEnabled: false
+  config:
+    modules:
+      http_2xx:
+        prober: http
+        timeout: 5s
+        http:
+          valid_http_versions: ["HTTP/1.0", "HTTP/1.1", "HTTP/2.0"]
+          no_follow_redirects: false
+          preferred_ip_protocol: "ip4"
+
+prometheus:
+  rbac:
+    create: false
+  alertmanager:
+    enabled: true
+    useClusterRole: false
+  kubeStateMetrics:
+    enabled: false
+  nodeExporter:
+    enabled: false
+  pushgateway:
+    enabled: false
+  server:
+    persistentVolume:
+      enabled: true
+    global:
+      scrape_interval: 10s
+  serverFiles:
+    prometheus.yml:
+      rule_files:
+        - /etc/config/recording_rules.yml
+        - /etc/config/alerting_rules.yml
+
+      scrape_configs:
+        - job_name: prometheus
+          static_configs:
+            - targets:
+              - localhost:9090
+
+        # A scrape configuration for running Prometheus on a Kubernetes cluster.
+        # This uses separate scrape configs for cluster components (i.e. API server, node)
+        # and services to allow each to use different authentication configs.
+        #
+        # Kubernetes labels will be added as Prometheus labels on metrics via the
+        # `labelmap` relabeling action.
+
+        # Scrape config for API servers.
+        #
+        # Kubernetes exposes API servers as endpoints to the default/kubernetes
+        # service so this uses `endpoints` role and uses relabelling to only keep
+        # the endpoints associated with the default/kubernetes service using the
+        # default named port `https`. This works for single API server deployments as
+        # well as HA API server deployments.
+  extraScrapeConfigs:
+  |
+   - job_name: 'prometheus-blackbox-exporter'
+     metrics_path: /probe
+     params:
+       module: [http_2xx]
+     static_configs:
+       - targets:
+         - https://uptime-app-uptime-app-prod.apps.user01-ops-training.openshift.ch/
+         - https://console.apps.user01-ops-training.openshift.ch/
+         - https://uptime-app-uptime-app-prod.apps.user02-ops-training.openshift.ch/
+         - https://console.apps.user02-ops-training.openshift.ch/
+         - https://uptime-app-uptime-app-prod.apps.user03-ops-training.openshift.ch/
+         - https://console.apps.user03-ops-training.openshift.ch/
+         - https://uptime-app-uptime-app-prod.apps.user04-ops-training.openshift.ch/
+         - https://console.apps.user04-ops-training.openshift.ch/
+         - https://uptime-app-uptime-app-prod.apps.user05-ops-training.openshift.ch/
+         - https://console.apps.user05-ops-training.openshift.ch/
+         - https://uptime-app-uptime-app-prod.apps.user06-ops-training.openshift.ch/
+         - https://console.apps.user06-ops-training.openshift.ch/
+         - https://uptime-app-uptime-app-prod.apps.user07-ops-training.openshift.ch/
+         - https://console.apps.user07-ops-training.openshift.ch/
+         - https://uptime-app-uptime-app-prod.apps.user08-ops-training.openshift.ch/
+         - https://console.apps.user08-ops-training.openshift.ch/
+         - https://uptime-app-uptime-app-prod.apps.user09-ops-training.openshift.ch/
+         - https://console.apps.user09-ops-training.openshift.ch/
+         - https://uptime-app-uptime-app-prod.apps.user10-ops-training.openshift.ch/
+         - https://console.apps.user10-ops-training.openshift.ch/
+     relabel_configs:
+       - source_labels: [__address__]
+         target_label: __param_target
+       - source_labels: [__param_target]
+         target_label: instance
+       - target_label: __address__
+         replacement: rel1-prometheus-blackbox-exporter:9115
