@@ -112,12 +112,12 @@ data:
                 "uid": "PBFA97CFB590B2093"
               },
               "exemplar": false,
-              "expr": "(sum(avg_over_time(probe_success{instance=\"https://console.apps.$userdropdown-ops-training.openshift.ch/\"}[$__range])) + sum(avg_over_time(probe_success{instance=\"https://uptime-app-uptime-app-prod.apps.$userdropdown-ops-training.openshift.ch/\"}[$__range]))) /2",
+              "expr": "",
               "hide": true,
               "instant": true,
               "interval": "",
-              "legendFormat": "$userdropdown",
-              "refId": "dummy"
+              "legendFormat": "",
+              "refId": ""
             }
           ],
           "transformations": [
@@ -617,9 +617,7 @@ data:
         "list": [
           {
             "current": {
-              "selected": true,
-              "text": "user01",
-              "value": "user01"
+              "selected": false
             },
             "hide": 0,
             "includeAll": false,
@@ -629,15 +627,15 @@ data:
             "options": [
               {{- range .Values.users }}
               {
-                "selected": true,
+                "selected": false,
                 "text": {{ . | quote }},
                 "value": {{ . | quote }}
               },
               {{- end }}
               {
-                "selected": true,
-                "text": "dummy",
-                "value": "dummy"
+                "selected": false,
+                "text": "",
+                "value": ""
               }
             ],
             "query": "",
