@@ -1,4 +1,7 @@
 grafana:
+  image:
+    repository: registry.puzzle.ch/docker.io/grafana
+    tag: 8.3.1
   rbac:
     create: true
     pspEnabled: false
@@ -8,11 +11,11 @@ grafana:
       kubernetes.io/tls-acme: "true"
     enabled: true
     hosts:
-      - grafana-ops-training.acend.ch
+      - grafana-ops.training.acend.ch
     tls:
       - secretName: grafana-openshift-4-ops-training-monitoring
         hosts:
-         - grafana-ops-training.acend.ch
+         - grafana-ops.training.acend.ch
   persistence:
     enabled: false
     size: "1Gi"
@@ -22,7 +25,7 @@ grafana:
       datasources:
       - name: Prometheus
         type: prometheus
-        url: http://rel1-prometheus-server
+        url: http://acend-ocp-uptime-monitoring-prometheus-server
         access: proxy
         isDefault: true
   sidecar:
@@ -30,6 +33,9 @@ grafana:
       enabled: true
       labelValue: dashboard
 prometheus-blackbox-exporter:
+  image:
+    repository: quay.io/prometheus/blackbox-exporter
+    tag: v0.19.0
   pspEnabled: false
   config:
     modules:
@@ -42,9 +48,22 @@ prometheus-blackbox-exporter:
           preferred_ip_protocol: "ip4"
 
 prometheus:
+  configmapReload:
+    prometheus:
+      image:
+        repository: quay.io/astronomer/ap-configmap-reloader
+        tag: 0.5.0-1
+    alertmanager:
+      image:
+        repository: quay.io/astronomer/ap-configmap-reloader
+        tag: 0.5.0-1
+  image:
+    repository: quay.io/prometheus/prometheus
   rbac:
     create: false
   alertmanager:
+    image:
+      repository: quay.io/prometheus/alertmanager
     enabled: true
     useClusterRole: false
   kubeStateMetrics:
@@ -58,6 +77,7 @@ prometheus:
       enabled: true
     global:
       scrape_interval: 5s
+      scrape_timeout: 5s
   serverFiles:
     prometheus.yml:
       rule_files:
@@ -118,4 +138,4 @@ prometheus:
        - source_labels: [__param_target]
          target_label: instance
        - target_label: __address__
-         replacement: rel1-prometheus-blackbox-exporter:9115
+         replacement: acend-ocp-uptime-monitoring-prometheus-blackbox-exporter:9115

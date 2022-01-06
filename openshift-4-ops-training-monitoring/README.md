@@ -4,16 +4,16 @@ This Helm Chart deploys a Prometheus server, Alertmanager, Blackboxexporter, Gra
 
 ## Deployment
 
-Deploy the stack to a separate k8s cluster with the following command, don't change the release `rel1`:
+Deploy the stack to a separate k8s cluster with the following command, don't change the release `acend-ocp-uptime-monitoring`:
 
 ```bash
-helm install rel1 -n <namespace> ./openshift-4-ops-training-monitoring
+helm install acend-ocp-uptime-monitoring -n <namespace> ./openshift-4-ops-training-monitoring
 ```
 
 This will automatically generate an admin password, use the following command store it in the `GRAFANA_ADMIN_PASSWORD` variable:
 
 ```bash
-export GRAFANA_ADMIN_PASSWORD=$(kubectl get secret rel1-grafana -o jsonpath="{.data.admin-password}" --namespace <namespace> | base64 --decode)
+export GRAFANA_ADMIN_PASSWORD=$(kubectl get secret acend-ocp-uptime-monitoring-grafana -o jsonpath="{.data.admin-password}" --namespace <namespace> | base64 --decode)
 ```
 
 **Note**: make sure to change the namespace to your setup
@@ -25,11 +25,11 @@ When updating your deplyoment, you have to pass the current admin password, othe
 Export it
 
 ```bash
-export GRAFANA_ADMIN_PASSWORD=$(kubectl get secret rel1-grafana -o jsonpath="{.data.admin-password}" --namespace <namespace> | base64 --decode)
+export GRAFANA_ADMIN_PASSWORD=$(kubectl get secret acend-ocp-uptime-monitoring-grafana -o jsonpath="{.data.admin-password}" --namespace <namespace> | base64 --decode)
 ```
 
 Pass it to the `upgrade` command
 
 ```bash
-helm upgrade rel1 -n <namespace> --set grafana.adminPassword=$GRAFANA_ADMIN_PASSWORD ./openshift-4-ops-training-monitoring
+helm upgrade acend-ocp-uptime-monitoring -n <namespace> --set grafana.adminPassword=$GRAFANA_ADMIN_PASSWORD ./openshift-4-ops-training-monitoring
 ```
