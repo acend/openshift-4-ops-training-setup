@@ -39,14 +39,17 @@ prometheus-blackbox-exporter:
   pspEnabled: false
   config:
     modules:
-      http_2xx:
+      http:
         prober: http
         timeout: 5s
         http:
           valid_http_versions: ["HTTP/1.0", "HTTP/1.1", "HTTP/2.0"]
-          no_follow_redirects: false
+          valid_status_codes:
+            - 200
+          follow_redirects: true
           preferred_ip_protocol: "ip4"
-
+          tls_config:
+            insecure_skip_verify: true
 prometheus:
   configmapReload:
     prometheus:
@@ -109,7 +112,7 @@ prometheus:
    - job_name: 'prometheus-blackbox-exporter'
      metrics_path: /probe
      params:
-       module: [http_2xx]
+       module: [http]
      static_configs:
        - targets:
          - https://uptime-app-uptime-app-prod.apps.user01-ops-training.openshift.ch/
@@ -132,6 +135,26 @@ prometheus:
          - https://console.apps.user09-ops-training.openshift.ch/
          - https://uptime-app-uptime-app-prod.apps.user10-ops-training.openshift.ch/
          - https://console.apps.user10-ops-training.openshift.ch/
+         - https://uptime-app-uptime-app-prod.apps.user11-ops-training.openshift.ch/
+         - https://console.apps.user11-ops-training.openshift.ch/
+         - https://uptime-app-uptime-app-prod.apps.user12-ops-training.openshift.ch/
+         - https://console.apps.user12-ops-training.openshift.ch/
+         - https://uptime-app-uptime-app-prod.apps.user13-ops-training.openshift.ch/
+         - https://console.apps.user13-ops-training.openshift.ch/
+         - https://uptime-app-uptime-app-prod.apps.user14-ops-training.openshift.ch/
+         - https://console.apps.user14-ops-training.openshift.ch/
+         - https://uptime-app-uptime-app-prod.apps.user15-ops-training.openshift.ch/
+         - https://console.apps.user15-ops-training.openshift.ch/
+         - https://uptime-app-uptime-app-prod.apps.user16-ops-training.openshift.ch/
+         - https://console.apps.user16-ops-training.openshift.ch/
+         - https://uptime-app-uptime-app-prod.apps.user17-ops-training.openshift.ch/
+         - https://console.apps.user17-ops-training.openshift.ch/
+         - https://uptime-app-uptime-app-prod.apps.user18-ops-training.openshift.ch/
+         - https://console.apps.user18-ops-training.openshift.ch/
+         - https://uptime-app-uptime-app-prod.apps.user19-ops-training.openshift.ch/
+         - https://console.apps.user19-ops-training.openshift.ch/
+         - https://uptime-app-uptime-app-prod.apps.user20-ops-training.openshift.ch/
+         - https://console.apps.user20-ops-training.openshift.ch/
      relabel_configs:
        - source_labels: [__address__]
          target_label: __param_target
