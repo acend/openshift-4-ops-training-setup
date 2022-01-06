@@ -1,6 +1,8 @@
 # OpenShift 4 Training Trainee Cluster Monitoring
 
-This Helm Chart deploys a Prometheus server, Alertmanager, Blackboxexporter, Grafana stack, with preconfigured blackbox probes for the console and uptime-app endpoints for each Trainee (01 - 10).
+This Helm Chart deploys a Prometheus server, Alertmanager, blackbox exporter and Grafana with preconfigured blackbox probes for the console and uptime app endpoints for each Trainee.
+
+Usernames used in labs can be defined in the values.yaml file
 
 ## Deployment
 
