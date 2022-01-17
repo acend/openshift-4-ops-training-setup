@@ -1,37 +1,39 @@
-# OpenShift 4 Training Trainee Cluster Monitoring
+# Uptime dashboard
 
-This Helm Chart deploys a Prometheus server, Alertmanager, blackbox exporter and Grafana with preconfigured blackbox probes for the console and uptime app endpoints for each Trainee.
+This Helm Chart produces a Grafana dashboard displaying all trainees' [uptime applications and consoles from the OpenShift 4 Operations training](https://openshift-4-ops.training.acend.ch/docs/01/05_deploy-uptime-app/#uptime-app). It deploys a Prometheus server, Alertmanager, blackbox exporter and Grafana with preconfigured blackbox probes.
 
-Usernames used in labs can be defined in the values.yaml file
+Usernames used in labs can be defined in the values.yaml file.
+
 
 ## Deployment
 
-Deploy the stack to a separate k8s cluster with the following command, don't change the release `acend-ocp-uptime-monitoring`:
+Deploy the stack to a separate k8s cluster with the following command with, e.g., release name `uptime-dashboard`:
 
 ```bash
-helm install acend-ocp-uptime-monitoring -n <namespace> ./openshift-4-ops-training-monitoring
+helm install uptime-dashboard -n <namespace> ./uptime-dashboard
 ```
 
-This will automatically generate an admin password, use the following command store it in the `GRAFANA_ADMIN_PASSWORD` variable:
+The Grafana admin password is automatically generated. Use the following command to get it:
 
 ```bash
-export GRAFANA_ADMIN_PASSWORD=$(kubectl get secret acend-ocp-uptime-monitoring-grafana -o jsonpath="{.data.admin-password}" --namespace <namespace> | base64 --decode)
+kubectl get secret uptime-dashboard-grafana -o jsonpath="{.data.admin-password}" --namespace <namespace> | base64 --decode
 ```
 
-**Note**: make sure to change the namespace to your setup
+**Note**: Make sure to change the namespace to your setup.
 
-### Update Deployment
 
-When updating your deplyoment, you have to pass the current admin password, otherwise each time will be generated a new one.
+### Update deployment
 
-Export it
+When updating the chart, you have to pass the current Grafana admin password or it will be generated and overwritten anew each time.
+
+Export the current password into the `GRAFANA_ADMIN_PASSWORD` variable:
 
 ```bash
-export GRAFANA_ADMIN_PASSWORD=$(kubectl get secret acend-ocp-uptime-monitoring-grafana -o jsonpath="{.data.admin-password}" --namespace <namespace> | base64 --decode)
+export GRAFANA_ADMIN_PASSWORD=$(kubectl get secret uptime-dashboard-grafana -o jsonpath="{.data.admin-password}" --namespace <namespace> | base64 --decode)
 ```
 
-Pass it to the `upgrade` command
+Pass it to the `helm upgrade` command:
 
 ```bash
-helm upgrade acend-ocp-uptime-monitoring -n <namespace> --set grafana.adminPassword=$GRAFANA_ADMIN_PASSWORD ./openshift-4-ops-training-monitoring
+helm upgrade uptime-dashboard -n <namespace> --set grafana.adminPassword=$GRAFANA_ADMIN_PASSWORD ./uptime-dashboard
 ```
