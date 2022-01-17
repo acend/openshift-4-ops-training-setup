@@ -1,2 +1,4 @@
 **/Chart.lock
 **/charts/*.tgz
+
+mail-generation/accounts.csv
