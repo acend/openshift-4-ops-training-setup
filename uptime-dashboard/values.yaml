@@ -12,7 +12,7 @@ users:
 grafana:
   image:
     repository: registry.puzzle.ch/docker.io/grafana
-    tag: 8.3.1
+    tag: 8.5.9
   rbac:
     create: true
     pspEnabled: false
