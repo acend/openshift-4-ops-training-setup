@@ -18,7 +18,6 @@ grafana:
     pspEnabled: false
   ingress:
     annotations:
-      kubernetes.io/ingress.class: nginx-public
       kubernetes.io/tls-acme: "true"
     enabled: true
     hosts:
