@@ -1,3 +1,3 @@
-# OpenShift 4 Training Setup
+# OpenShift Operations Training Setup
 
-This Repo contains the setup instructions for the Openshift 4 Training
+This repository contains resources necessary for the Openshift Operations Training.
