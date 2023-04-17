@@ -1,0 +1,72 @@
+users:
+  - user01
+  - user02
+  - user03
+  - user04
+  - user05
+  - user06
+  - user07
+  - user08
+  - user09
+  - user10
+  - user11
+  - user12
+  - user13
+  - user14
+  - user15
+grafana:
+  ingress:
+    enabled: true
+    hosts:
+      - openshift-operations-grafana.training.acend.ch
+    tls:
+      - secretName: openshift-operations-grafana
+        hosts:
+          - openshift-operations-grafana.training.acend.ch
+  persistence:
+    enabled: false
+    size: "1Gi"
+  datasources:
+    datasources.yaml:
+      apiVersion: 1
+      datasources:
+        - name: Prometheus
+          type: prometheus
+          url: http://acend-ocp-uptime-monitoring-prometheus-server
+          access: proxy
+          isDefault: true
+  sidecar:
+    dashboards:
+      enabled: true
+      labelValue: dashboard
+prometheus-blackbox-exporter:
+  image:
+    repository: quay.io/prometheus/blackbox-exporter
+  pspEnabled: false
+  config:
+    modules:
+      http:
+        prober: http
+        timeout: 5s
+        http:
+          valid_http_versions: ["HTTP/1.0", "HTTP/1.1", "HTTP/2.0"]
+          valid_status_codes:
+            - 200
+          follow_redirects: true
+          preferred_ip_protocol: "ip4"
+          tls_config:
+            insecure_skip_verify: true
+prometheus:
+  rbac:
+    create: false
+  server:
+    persistentVolume:
+      enabled: true
+  alertmanager:
+    enabled: false
+  kube-state-metrics:
+    enabled: false
+  prometheus-node-exporter:
+    enabled: false
+  prometheus-pushgateway:
+    enabled: false

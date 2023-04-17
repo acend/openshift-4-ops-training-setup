@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: cluster-addons
+  namespace: argocd
+spec:
+  generators:
+  - git:
+      repoURL: https://github.com/acend/openshift-operations-setup.git
+      revision: HEAD
+      files:
+        - path: deploy/**/overlays/**/config.json
+  template:
+    metadata:
+      name: '{{path[1]}}-{{path.basename}}'
+    spec:
+      project: openshift-operations
+      source:
+        repoURL: https://github.com/acend/openshift-operations-setup.git
+        targetRevision: HEAD
+        path: '{{path}}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{namespace}}'
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
