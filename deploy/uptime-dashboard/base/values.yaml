@@ -19,11 +19,11 @@ grafana:
   ingress:
     enabled: true
     hosts:
-      - openshift-operations-grafana.training.acend.ch
+      - openshift-operations-monitoring.training.acend.ch
     tls:
-      - secretName: openshift-operations-grafana
+      - secretName: openshift-operations-monitoring
         hosts:
-          - openshift-operations-grafana.training.acend.ch
+          - openshift-operations-monitoring.training.acend.ch
   persistence:
     enabled: false
     size: "1Gi"
