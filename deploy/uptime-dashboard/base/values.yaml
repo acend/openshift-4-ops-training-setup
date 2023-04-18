@@ -33,7 +33,7 @@ grafana:
       datasources:
         - name: Prometheus
           type: prometheus
-          url: http://acend-ocp-uptime-monitoring-prometheus-server
+          url: http://uptime-dashboard-prometheus-server
           access: proxy
           isDefault: true
   sidecar:
