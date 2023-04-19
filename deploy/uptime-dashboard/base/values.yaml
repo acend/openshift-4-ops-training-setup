@@ -63,6 +63,7 @@ prometheus:
   server:
     persistentVolume:
       enabled: true
+    configMapOverrideName: "obsolete"
   alertmanager:
     enabled: false
   kube-state-metrics:
