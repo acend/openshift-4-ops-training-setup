@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: prometheus
+    component: server
+  name: acend-ocp-uptime-monitoring-prometheus-server
+data:
+  prometheus.yml: |
+    global:
+      evaluation_interval: 1m
+      scrape_interval: 5s
+      scrape_timeout: 5s
+    scrape_configs:
+    - job_name: prometheus
+      static_configs:
+      - targets:
+        - localhost:9090
+    - job_name: 'prometheus-blackbox-exporter'
+      metrics_path: /probe
+      params:
+        module: [http]
+      static_configs:
+        - targets:
+            - https://uptime-app-uptime-app-prod.apps.tim01-ops-training.openshift.ch/
+            - https://console.apps.tim01-ops-training.openshift.ch/
+            - https://uptime-app-uptime-app-prod.apps.tim02-ops-training.openshift.ch/
+            - https://console.apps.tim02-ops-training.openshift.ch/
+            - https://uptime-app-uptime-app-prod.apps.tim03-ops-training.openshift.ch/
+            - https://console.apps.tim03-ops-training.openshift.ch/
+            - https://uptime-app-uptime-app-prod.apps.tim04-ops-training.openshift.ch/
+            - https://console.apps.tim04-ops-training.openshift.ch/
+            - https://uptime-app-uptime-app-prod.apps.tim05-ops-training.openshift.ch/
+            - https://console.apps.tim05-ops-training.openshift.ch/
+            - https://uptime-app-uptime-app-prod.apps.tim06-ops-training.openshift.ch/
+            - https://console.apps.tim06-ops-training.openshift.ch/
+            - https://uptime-app-uptime-app-prod.apps.tim07-ops-training.openshift.ch/
+            - https://console.apps.tim07-ops-training.openshift.ch/
+            - https://uptime-app-uptime-app-prod.apps.tim08-ops-training.openshift.ch/
+            - https://console.apps.tim08-ops-training.openshift.ch/
+            - https://uptime-app-uptime-app-prod.apps.tim09-ops-training.openshift.ch/
+            - https://console.apps.tim09-ops-training.openshift.ch/
+            - https://uptime-app-uptime-app-prod.apps.tim10-ops-training.openshift.ch/
+            - https://console.apps.tim10-ops-training.openshift.ch/
+            - https://uptime-app-uptime-app-prod.apps.tim11-ops-training.openshift.ch/
+            - https://console.apps.tim11-ops-training.openshift.ch/
+            - https://uptime-app-uptime-app-prod.apps.tim12-ops-training.openshift.ch/
+            - https://console.apps.tim12-ops-training.openshift.ch/
+            - https://uptime-app-uptime-app-prod.apps.tim13-ops-training.openshift.ch/
+            - https://console.apps.tim13-ops-training.openshift.ch/
+            - https://uptime-app-uptime-app-prod.apps.tim14-ops-training.openshift.ch/
+            - https://console.apps.tim14-ops-training.openshift.ch/
+            - https://uptime-app-uptime-app-prod.apps.tim15-ops-training.openshift.ch/
+            - https://console.apps.tim15-ops-training.openshift.ch/
+            - https://uptime-app-uptime-app-prod.apps.tim18-oso-cluster.openshift.ch/
+            - https://console.apps.tim18-oso-cluster.openshift.ch/
+      relabel_configs:
+        - source_labels: [__address__]
+          target_label: __param_target
+        - source_labels: [__param_target]
+          target_label: instance
+        - target_label: __address__
+          replacement: acend-ocp-uptime-monitoring-prometheus-blackbox-exporter:9115
