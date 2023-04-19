@@ -21,7 +21,7 @@ grafana:
     hosts:
       - openshift-operations-monitoring.training.acend.ch
     tls:
-      - secretName: openshift-operations-monitoring
+      - secretName: acend-wildcard
         hosts:
           - openshift-operations-monitoring.training.acend.ch
   persistence:
