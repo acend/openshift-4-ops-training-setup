@@ -4,7 +4,7 @@ metadata:
   labels:
     app: prometheus
     component: server
-  name: acend-ocp-uptime-monitoring-prometheus-server
+  name: acend-ocp-uptime-monitoring-prometheus-server2
 data:
   prometheus.yml: |
     global:
