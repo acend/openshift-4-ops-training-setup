@@ -1,0 +1,12 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: uptime-dashboard-prometheus-server
+spec:
+  template:
+    spec:
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: uptime-dashboard-prometheus-server-workaround
+        name: config-volume

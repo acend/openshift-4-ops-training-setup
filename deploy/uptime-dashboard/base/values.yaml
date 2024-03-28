@@ -1,20 +1,5 @@
 users:
-  - tim01
-  - tim02
-  - tim03
-  - tim04
-  - tim05
-  - tim06
-  - tim07
-  - tim08
-  - tim09
-  - tim10
-  - tim11
-  - tim12
-  - tim13
-  - tim14
-  - tim15
-  - tim18
+  - test
 grafana:
   ingress:
     enabled: true
@@ -63,7 +48,9 @@ prometheus:
   server:
     persistentVolume:
       enabled: true
-    configMapOverrideName: "obsolete"
+    configMapOverrideName: "prometheus-server-workaround"
+    ingress:
+      enabled: true
   alertmanager:
     enabled: false
   kube-state-metrics:
