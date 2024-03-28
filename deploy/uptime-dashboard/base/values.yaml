@@ -49,8 +49,6 @@ prometheus:
     persistentVolume:
       enabled: true
     configMapOverrideName: "prometheus-server-workaround"
-    ingress:
-      enabled: true
   alertmanager:
     enabled: false
   kube-state-metrics:
