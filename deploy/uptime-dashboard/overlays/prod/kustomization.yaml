@@ -3,6 +3,9 @@ kind: Kustomization
 namespace: acend-openshift-operations-monitoring-prod
 resources:
   - ../../base
+  - rolebinding_challer-edit.yaml
+  - secret_challer.yaml
+  - serviceaccount_challer.yaml
 
 configMapGenerator:
   - name: uptime-dashboard-prometheus-server-workaround
