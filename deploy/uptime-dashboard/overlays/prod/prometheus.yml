@@ -15,6 +15,24 @@ scrape_configs:
     - targets:
         - https://openshift-operations.training.acend.ch/
         - https://ocpi.rhb.ch/
+        - https://uptime-app-uptime-app-prod.apps.user01-ops-training.openshift.ch/
+        - https://console.apps.user01-ops-training.openshift.ch/
+        - https://uptime-app-uptime-app-prod.apps.user02-ops-training.openshift.ch/
+        - https://console.apps.user02-ops-training.openshift.ch/
+        - https://uptime-app-uptime-app-prod.apps.user03-ops-training.openshift.ch/
+        - https://console.apps.user03-ops-training.openshift.ch/
+        - https://uptime-app-uptime-app-prod.apps.user04-ops-training.openshift.ch/
+        - https://console.apps.user04-ops-training.openshift.ch/
+        - https://uptime-app-uptime-app-prod.apps.user05-ops-training.openshift.ch/
+        - https://console.apps.user05-ops-training.openshift.ch/
+        - https://uptime-app-uptime-app-prod.apps.user06-ops-training.openshift.ch/
+        - https://console.apps.user06-ops-training.openshift.ch/
+        - https://uptime-app-uptime-app-prod.apps.user07-ops-training.openshift.ch/
+        - https://console.apps.user07-ops-training.openshift.ch/
+        - https://uptime-app-uptime-app-prod.apps.user08-ops-training.openshift.ch/
+        - https://console.apps.user08-ops-training.openshift.ch/
+        - https://uptime-app-uptime-app-prod.apps.user09-ops-training.openshift.ch/
+        - https://console.apps.user09-ops-training.openshift.ch/
   relabel_configs:
     - source_labels: [__address__]
       target_label: __param_target
