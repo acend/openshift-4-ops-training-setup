@@ -19,8 +19,8 @@ scrape_configs:
         - https://console.apps.user01-ops-training.openshift.ch/
         - https://uptime-app-uptime-app-prod.apps.user02-ops-training.openshift.ch/
         - https://console.apps.user02-ops-training.openshift.ch/
-        - https://uptime-app-uptime-app-prod.apps.user03-ops-training.openshift.ch/
-        - https://console.apps.user03-ops-training.openshift.ch/
+        - https://uptime-app-uptime-app-prod.apps.user3-ops-training.openshift.ch/
+        - https://console.apps.user3-ops-training.openshift.ch/
         - https://uptime-app-uptime-app-prod.apps.user04-ops-training.openshift.ch/
         - https://console.apps.user04-ops-training.openshift.ch/
         - https://uptime-app-uptime-app-prod.apps.user05-ops-training.openshift.ch/
