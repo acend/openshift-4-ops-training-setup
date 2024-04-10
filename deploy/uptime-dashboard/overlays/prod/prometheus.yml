@@ -31,8 +31,8 @@ scrape_configs:
         - https://console.apps.user07-ops-training.openshift.ch/
         - https://uptime-app-uptime-app-prod.apps.user08-ops-training.openshift.ch/
         - https://console.apps.user08-ops-training.openshift.ch/
-        - https://uptime-app-uptime-app-prod.apps.user09-ops-training.openshift.ch/
-        - https://console.apps.user09-ops-training.openshift.ch/
+        - https://uptime-app-uptime-app-prod.apps.user09.openshift.ch/
+        - https://console.apps.user09.openshift.ch/
   relabel_configs:
     - source_labels: [__address__]
       target_label: __param_target
